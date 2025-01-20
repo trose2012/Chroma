@@ -1,4 +1,4 @@
-# 3kh0.github.io V2
+# Chroma V2
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/3kh0/website-v2?color=yellow&label=Repo%20stars&logo=github&style=for-the-badge)
 ![GitHub issues](https://img.shields.io/github/issues/3kh0/website-v2?logo=github&style=for-the-badge)
@@ -13,6 +13,6 @@
 
 You can preview the current state of the projects with the link below:
 
-https://3kh0.github.io/website-v2/
+https://chr0ma.me/
 
 ## 
