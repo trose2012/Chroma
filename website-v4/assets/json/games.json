@@ -422,9 +422,9 @@
 	},
 	{
 		"name": "Bonk.io",
-		"root": "website-v4/projects/bonkio",
+		"root": "../projects/bonkio",
 		"file": "bonkio.html",
-		"img": "image.png"
+		"img": "website-v4/projects/bonkio/image.png"
 	},
 	{
 		"name": "Box Head",
