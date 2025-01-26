@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/index.css" />
     <link rel="shortcut icon" href="../images/logo.png" type="image/png" />
-    <title>Loading... | 3kh0</title>
+    <title>Loading... | Chroma</title>
     <style>
       html,
       body {
@@ -113,7 +113,7 @@
             }
 
             const game = games[gameRoots.indexOf(gameSubpath)];
-            document.title = `Play ${game.name} | 3kh0`;
+            document.title = `Play ${game.name} | Chroma`;
             window.history.pushState({}, "", `${origin}games/${gameSubpath}`);
             document.querySelector("#game").textContent = game.name;
             document.querySelector(".loader").innerHTML = `<img src="${cdn + "/" + game.root + "/" + game.img}" class="game_img" onerror="this.src='./globe.svg'"/>`;
