@@ -422,7 +422,7 @@
 	},
 	{
 		"name": "Bonk.io",
-		"root": "./projects/bonkio",
+		"root": "website-v4/projects/bonkio",
 		"file": "bonkio.html",
 		"img": "image.png"
 	},
