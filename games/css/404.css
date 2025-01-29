@@ -1,0 +1,25 @@
+body {
+  font-family: sans-serif;
+  color: #fff;
+  background-color: #1c1c1d;
+}
+a {
+  color: #6079e6;
+}
+#sfn {
+  padding: 10px;
+}
+#detail {
+  padding-bottom: 10px;
+}
+#sfnButton {
+  padding: 3px;
+}
+* {
+  margin: auto;
+  text-align: center;
+}
+#header {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
