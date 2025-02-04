@@ -1,19 +1,14 @@
 function checkUserKey() {
-    function getCookie(name) {
-        let cookies = document.cookie.split('; ');
-        for (let i = 0; i < cookies.length; i++) {
-            let [cookieName, cookieValue] = cookies[i].split('=');
-            if (cookieName === name) return cookieValue;
-        }
-        return null;
-    }
-    
-    let userKey = getCookie("userKey");
+    const userKey = localStorage.getItem('userKey');
     if (!userKey) {
-        alert("You need a key to proceed.");
-        window.location.href = "/key.html";
+        window.location.href = 'key.html';
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    checkUserKey();
+    displayHistory();
+});
 
 function navigate() {
     checkUserKey();
@@ -46,4 +41,78 @@ function navigate() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", checkUserKey);
+function addToHistory(url) {
+    const history = JSON.parse(localStorage.getItem('history')) || [];
+    history.push(url);
+    localStorage.setItem('history', JSON.stringify(history));
+    displayHistory();
+}
+
+function displayHistory() {
+    const historyDiv = document.getElementById('history');
+    historyDiv.innerHTML = (JSON.parse(localStorage.getItem('history')) || []).map(url =>
+        `<div class="history-item" onclick="document.getElementById('url-input').value='${url}';navigate();">${url}</div>`
+    ).join('');
+}
+
+function executeJavascript(jsUrl, openInNewTab = false) {
+    const jsCode = jsUrl.substring(11);
+    if (openInNewTab) {
+        const newWindow = window.open('about:blank', '_blank');
+        newWindow.document.write(`<script>${jsCode}</script>`);
+        newWindow.document.close();
+    } else {
+        eval(jsCode);
+    }
+}
+
+function runConsole() {
+    try {
+        eval(document.getElementById('console-input').value);
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', displayHistory);
+
+function reloadPage() {
+    document.getElementById('content-frame').contentWindow.location.reload();
+}
+
+function addBookmark() {
+    const url = document.getElementById('url-input').value;
+    const bookmarks = document.getElementById('bookmarks');
+    const bookmark = document.createElement('div');
+    bookmark.className = 'bookmark';
+    bookmark.textContent = url;
+    bookmark.onclick = () => {
+        document.getElementById('url-input').value = url;
+        navigate();
+    };
+    bookmarks.appendChild(bookmark);
+}
+
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    document.body.style.backgroundColor = isDark ? '#333' : '#121212';
+    document.body.style.color = isDark ? '#f0f0f0' : '#ffffff';
+}
+
+function toggleConsole() {
+    document.getElementById('console-input').classList.toggle('hidden');
+}
+
+function toggleHistory() {
+    document.getElementById('history').classList.toggle('hidden');
+}
+
+function toggleQuickUrls() {
+    document.getElementById('quick-urls').classList.toggle('hidden');
+}
+
+function quickNavigate(url) {
+    document.getElementById('url-input').value = url;
+    navigate();
+}
