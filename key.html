@@ -22,6 +22,7 @@
     <p id="timer">10</p>
     <div id="key-container">
         <p>Your key: <span id="key"></span></p>
+        <button onclick="proceed()">Continue</button>
     </div>
     
     <script>
@@ -39,25 +40,33 @@
             date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
             document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
         }
-        
+
         function generateKey() {
-            return Math.random().toString(36).substring(2, 12); // 10-char key
+            return Math.random().toString(36).substring(2, 12); // 10-character key
+        }
+
+        function proceed() {
+            window.location.href = 'prxy.html'; // Change this if needed
         }
         
-        let userKey = getCookie("userKey");
+        let userKey = localStorage.getItem("userKey") || getCookie("userKey");
         let timerElement = document.getElementById("timer");
         let keyContainer = document.getElementById("key-container");
         let keyElement = document.getElementById("key");
         let messageElement = document.getElementById("message");
-        
+
         if (userKey) {
+            // Key already exists
             messageElement.textContent = "You already have a key.";
             timerElement.style.display = "none";
             keyContainer.style.display = "block";
             keyElement.textContent = userKey;
         } else {
+            // Generate a new key
             userKey = generateKey();
+            localStorage.setItem("userKey", userKey);
             setCookie("userKey", userKey, 7);
+
             let timeLeft = 10;
             let countdown = setInterval(() => {
                 timeLeft--;
