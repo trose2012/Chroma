@@ -18,7 +18,7 @@
 </head>
 <body>
     <h1>Get Your Unique Key</h1>
-    <p>Stay on this page for 10 seconds to receive your key.</p>
+    <p id="message">Stay on this page for 10 seconds to receive your key.</p>
     <p id="timer">10</p>
     <div id="key-container">
         <p>Your key: <span id="key"></span></p>
@@ -45,25 +45,30 @@
         }
         
         let userKey = getCookie("userKey");
-        if (!userKey) {
-            userKey = generateKey();
-            setCookie("userKey", userKey, 7);
-        }
-        
-        let timeLeft = 10;
         let timerElement = document.getElementById("timer");
         let keyContainer = document.getElementById("key-container");
         let keyElement = document.getElementById("key");
+        let messageElement = document.getElementById("message");
         
-        let countdown = setInterval(() => {
-            timeLeft--;
-            timerElement.textContent = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                keyContainer.style.display = "block";
-                keyElement.textContent = userKey;
-            }
-        }, 1000);
+        if (userKey) {
+            messageElement.textContent = "You already have a key.";
+            timerElement.style.display = "none";
+            keyContainer.style.display = "block";
+            keyElement.textContent = userKey;
+        } else {
+            userKey = generateKey();
+            setCookie("userKey", userKey, 7);
+            let timeLeft = 10;
+            let countdown = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    keyContainer.style.display = "block";
+                    keyElement.textContent = userKey;
+                }
+            }, 1000);
+        }
     </script>
 </body>
 </html>
