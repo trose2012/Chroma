@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #key-container {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Get Your Unique Key</h1>
+    <p>Stay on this page for 10 seconds to receive your key.</p>
+    <p id="timer">10</p>
+    <div id="key-container">
+        <p>Your key: <span id="key"></span></p>
+    </div>
+    
+    <script>
+        function getCookie(name) {
+            let cookies = document.cookie.split('; ');
+            for (let i = 0; i < cookies.length; i++) {
+                let [cookieName, cookieValue] = cookies[i].split('=');
+                if (cookieName === name) return cookieValue;
+            }
+            return null;
+        }
+        
+        function setCookie(name, value, hours) {
+            let date = new Date();
+            date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
+            document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+        }
+        
+        function generateKey() {
+            return Math.random().toString(36).substring(2, 12); // 10-char key
+        }
+        
+        let userKey = getCookie("userKey");
+        if (!userKey) {
+            userKey = generateKey();
+            setCookie("userKey", userKey, 7);
+        }
+        
+        let timeLeft = 10;
+        let timerElement = document.getElementById("timer");
+        let keyContainer = document.getElementById("key-container");
+        let keyElement = document.getElementById("key");
+        
+        let countdown = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                keyContainer.style.display = "block";
+                keyElement.textContent = userKey;
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
