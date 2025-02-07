@@ -1,0 +1,30 @@
+{
+    "name": "3kh0v5",
+    "version": "3.0.0",
+    "description": "3kh0v5",
+    "type": "module",
+    "engines": {
+        "npm": ">=7.0.0",
+        "node": ">=16.0.0"
+    },
+    "scripts": {
+        "start": "node index.js --host",
+        "run": "node index.js --host",
+        "shadow": "node index.js --host"
+    },
+    "keywords": [
+        "proxy"
+    ],
+    "author": "",
+    "license": "GPL-3.0-or-later",
+    "dependencies": {
+        "@titaniumnetwork-dev/ultraviolet": "^1.0.10",
+        "@tomphttp/bare-server-node": "^2.0.0",
+        "axios": "^1.4.0",
+        "compression": "^1.7.4",
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
+        "express-http-proxy": "^2.0.0",
+        "typewriter-effect": "^2.21.0"
+    }
+}
