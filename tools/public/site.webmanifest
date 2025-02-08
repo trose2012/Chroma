@@ -1,6 +1,6 @@
 {
-  "name": "Echo Net Extras",
-  "short_name": "Echo Net Extras",
+  "name": "Tools",
+  "short_name": "Tools",
   "icons": [{ "src": "/favicon-32x32.png", "sizes": "32x32", "type": "image/png" }],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
