@@ -1,0 +1,16 @@
+<title>Tools</title>
+<div id="app">
+      <div class="test">({{ testMessage }})</div>
+</div>
+<script src="https://unpkg.com/vue@3.2.21/dist/"></script>
+<script>
+const app = {
+  data() {
+    return {
+      testMessage: 'World domination!';
+    }
+  }
+}
+
+Vue.createApp(app).mount('#app');
+</script>
