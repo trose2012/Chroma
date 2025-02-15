@@ -12,6 +12,12 @@
       "img": "splash.png"
     },
     {
+      "name": "Granny",
+      "root": "granny",
+      "file": "index.html",
+      "img": "splash.png"
+    },
+    {
       "name": "100 Player Pong",
       "root": "100ng",
       "file": "index.html",
