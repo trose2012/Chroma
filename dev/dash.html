@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Dashboard</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            color: white; 
+            transition: background 1s ease; /* Smooth background change */
+            overflow: hidden; 
+            position: relative;
+        }
+        .dashboard { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; 
+            padding: 20px; 
+            background: rgba(52, 21, 57, 0.8); 
+            border-radius: 20px; 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); 
+            width: 90%; 
+            max-width: 1200px; 
+            z-index: 10; 
+        }
+        .widget { 
+            background: #44224e; 
+            padding: 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+        }
+        .time { 
+            font-size: 3.5rem; 
+            font-weight: bold; 
+            color: #34d399; 
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5); 
+            cursor: pointer; 
+        }
+        .date, .quote { 
+            font-size: 1.3rem; 
+            color: #bbb; 
+        }
+        .quote { 
+            font-style: italic; 
+            color: #ff69b4; 
+        }
+        .slider-container { 
+            display: none; 
+            margin-top: 10px; 
+        }
+        input[type="range"] { 
+            width: 100%; 
+        }
+        .circle { 
+            position: absolute; 
+            border-radius: 50%; 
+            background: rgba(255, 255, 255, 0.2); 
+            animation: moveCircle 20s linear infinite; 
+            z-index: -1; 
+        }
+        @keyframes moveCircle { 
+            0% { 
+                transform: translate(0, 0); 
+            } 
+            50% { 
+                transform: translate(100vw, 100vh); 
+            } 
+            100% { 
+                transform: translate(0, 0); 
+            } 
+        }
+        .snowflakes { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            pointer-events: none; 
+            z-index: -1; 
+        }
+        .snowflake { 
+            position: absolute; 
+            color: white; 
+            font-size: 24px; 
+            animation: snow 10s linear infinite; 
+        }
+        @keyframes snow { 
+            0% { 
+                top: -10px; 
+                opacity: 1; 
+            } 
+            100% { 
+                top: 100vh; 
+                opacity: 0; 
+            } 
+        }
+        .raindrop { 
+            position: absolute; 
+            color: white; 
+            font-size: 14px; 
+            animation: rain 5s linear infinite; 
+        }
+        @keyframes rain { 
+            0% { 
+                top: -10px; 
+                opacity: 1; 
+            } 
+            100% { 
+                top: 100vh; 
+                opacity: 0; 
+            } 
+        }
+        .system-info { 
+            font-size: 1.2rem; 
+            color: #a5a5a5; 
+            padding-top: 10px; 
+        }
+        .system-info h4 { 
+            margin-bottom: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="widget">
+            <div class="time" id="time" onclick="toggleSlider()">12:00 AM</div>
+            <div class="date" id="date">Loading...</div>
+            <div class="slider-container" id="slider-container">
+                <input type="range" id="time-slider" min="0" max="23" value="12" class="time-slider">
+                <div id="slider-value">12:00 AM</div>
+            </div>
+        </div>
+        <div class="widget"><h3>Weather</h3><div id="weather">Loading...</div></div>
+        <div class="widget"><h3>Code Snippet</h3><div id="snippet">const isWeatherGood = true;</div></div>
+        <div class="widget"><h3>Random Quote</h3><div class="quote" id="quote">"The only way to do great work is to love what you do." – Steve Jobs</div></div>
+        <div class="widget"><h3>Did You Know?</h3><div id="fact">Did you know? Honey never spoils.</div></div>
+        <div class="widget"><h3>Fun fact</h3><div id="national-day">Loading...</div></div>
+    </div>
+
+    <div class="snowflakes" id="snowflakes"></div>
+    <div class="raindrops" id="raindrops"></div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            document.getElementById('time').textContent = `${(hours % 12 || 12)}:${minutes < 10 ? '0'+minutes : minutes} ${ampm}`;
+            document.getElementById('date').textContent = now.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Set the dynamic background color based on the time
+            let bgColor = '';
+            if (hours >= 6 && hours < 12) {
+                // Morning (6 AM - 12 PM)
+                bgColor = 'rgb(255, 223, 186)';
+            } else if (hours >= 12 && hours < 18) {
+                // Afternoon (12 PM - 6 PM)
+                bgColor = 'rgb(255, 140, 0)';
+            } else if (hours >= 18 && hours < 21) {
+                // Evening (6 PM - 9 PM)
+                bgColor = 'rgb(93, 35, 85)';
+            } else {
+                // Night (9 PM - 6 AM)
+                bgColor = 'rgb(18, 24, 48)';
+            }
+            document.body.style.backgroundColor = bgColor;
+        }
+
+        setInterval(updateTime, 1000);
+
+        async function fetchWeather() {
+            const city = "New York";
+            const apiUrl = `https://wttr.in/${city}?format=%C+%t`;
+            const response = await fetch(apiUrl);
+            const weatherData = await response.text();
+            document.getElementById('weather').textContent = weatherData;
+            if (weatherData.includes("rain")) startRain(); else stopRain();
+            if (weatherData.includes("snow")) startSnow(); else stopSnow();
+        }
+        setInterval(fetchWeather, 60000);
+        fetchWeather();
+
+        async function fetchQuote() {
+            const response = await fetch('https://api.quotable.io/random');
+            const data = await response.json();
+            document.getElementById('quote').textContent = `"${data.content}" – ${data.author}`;
+        }
+        setInterval(fetchQuote, 30000);
+        fetchQuote();
+
+        async function fetchFact() {
+            const response = await fetch('https://uselessfacts.jsph.pl/random.json?language=en');
+            const data = await response.json();
+            document.getElementById('fact').textContent = `Did you know? ${data.text}`;
+        }
+        fetchFact();
+
+        async function fetchNationalDay() {
+            const today = new Date().toISOString().slice(0, 10);
+            const response = await fetch(`https://api.api-ninjas.com/v1/facts?date=${today}`, { headers: { 'X-Api-Key': 'NBYfUqg9QoJnrfaFZB1qSQ==51D5kWkYyRUsFqSv' } });
+            const data = await response.json();
+            const nationalDay = data?.[0]?.fact || "No special day today.";
+            document.getElementById('national-day').textContent = `Fun fact: ${nationalDay}`;
+        }
+        fetchNationalDay();
+
+        setInterval(() => { document.getElementById('snippet').textContent = ['const isWeatherGood = true;', 'function greetUser(name) { return "Hello, " + name; }', 'if (status === "active") { console.log("User is active!"); }', 'let array = [1, 2, 3, 4]; array.forEach(item => console.log(item));', 'async function fetchData(url) { const response = await fetch(url); return response.json(); }'][Math.floor(Math.random()*5)]; }, 15000);
+
+        function toggleSlider() { document.getElementById('slider-container').style.display = document.getElementById('slider-container').style.display === "none" ? "block" : "none"; }
+
+        const timeSlider = document.getElementById('time-slider');
+        timeSlider.addEventListener('input', function() {
+            const value = timeSlider.value;
+            const hours = value % 12 || 12;
+            const ampm = value >= 12 ? 'PM' : 'AM';
+            document.getElementById('slider-value').textContent = `${hours}:00 ${ampm}`;
+            document.getElementById('time').textContent = `${hours}:00 ${ampm}`;
+            document.body.style.backgroundColor = `rgb(${90 + (value * 5)}, ${20 + (value * 4)}, ${90 - (value * 3)})`; 
+        });
+
+        function startRain() {
+            const raindrops = document.getElementById('raindrops');
+            raindrops.innerHTML = '';
+            for (let i = 0; i < 50; i++) {
+                const drop = document.createElement('div');
+                drop.classList.add('raindrop');
+                drop.style.left = `${Math.random() * 100}vw`;
+                drop.style.animationDuration = `${Math.random() * 2 + 3}s`;
+                drop.style.animationDelay = `${Math.random() * 5}s`;
+                raindrops.appendChild(drop);
+            }
+        }
+        function stopRain() {
+            const raindrops = document.getElementById('raindrops');
+            raindrops.innerHTML = '';
+        }
+        function startSnow() {
+            const snowflakes = document.getElementById('snowflakes');
+            snowflakes.innerHTML = '';
+            for (let i = 0; i < 50; i++) {
+                const flake = document.createElement('div');
+                flake.classList.add('snowflake');
+                flake.textContent = '❄️';
+                flake.style.left = `${Math.random() * 100}vw`;
+                flake.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                flake.style.animationDelay = `${Math.random() * 5}s`;
+                snowflakes.appendChild(flake);
+            }
+        }
+        function stopSnow() {
+            const snowflakes = document.getElementById('snowflakes');
+            snowflakes.innerHTML = '';
+        }
+
+        window.addEventListener('load', updateTime);
+    </script>
+</body>
+</html>
