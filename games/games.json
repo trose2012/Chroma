@@ -59,6 +59,12 @@
       "file": "index.html",
       "img": "splash.png"
     },
+     {
+      "name": "LineRider",
+      "root": "LineRider",
+      "file": "index.html",
+      "img": "splash.png"
+    },
     {
       "name": "A Dark Room",
       "root": "adarkroom",
