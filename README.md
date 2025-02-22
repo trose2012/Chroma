@@ -1,8 +1,8 @@
-# Chroma V2
+# Chroma
 
-## Preview
+## Site
 
-You can preview the current state of the projects with the link below:
+You can see the current state of the projects with the link below:
 
 https://chr0ma.me/
 
